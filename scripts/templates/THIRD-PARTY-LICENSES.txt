@@ -1,0 +1,18 @@
+AuroraPlayer (晨曦影音) — Third-party licenses
+================================================================
+
+This distribution includes the following open-source components:
+
+  1. libmpv / mpv          — LGPLv2.1+    https://github.com/mpv-player/mpv
+  2. FFmpeg                — LGPLv2.1+    https://ffmpeg.org/
+  3. Qt 6                  — LGPLv3       https://www.qt.io/
+  4. whisper.cpp / ggml    — MIT          https://github.com/ggml-org/whisper.cpp
+  5. CUDA runtime DLLs     — NVIDIA EULA  (only in the -cuda variant)
+                             https://docs.nvidia.com/cuda/eula/
+  6. Microsoft Visual C++ Runtime — Microsoft Software License Terms
+                             https://learn.microsoft.com/cpp/windows/redistributing-visual-cpp-files
+
+The full text of each license is reproduced in the upstream project's
+LICENSE file linked above. The redistribution here complies with the
+copyleft requirements of LGPL: all linked DLLs (Qt6*.dll, libmpv-2.dll)
+are dynamically loaded; users may replace them with their own builds.

@@ -1,0 +1,11 @@
+// Windows resource file: embeds the multi-size app icon into the executable
+// so Explorer, the taskbar, alt-tab thumbnails, and File Properties all
+// pick it up. The .ico file beside this .rc is built by scripts/make-icon.ps1
+// at CMake configure time.
+//
+// IDI_ICON1 is by convention the first icon in the resource block; many
+// shell utilities prefer to read this id when extracting the file's icon.
+
+#define IDI_ICON1 101
+
+IDI_ICON1 ICON "app.ico"
