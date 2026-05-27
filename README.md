@@ -17,77 +17,7 @@
 | VR / 360 | mpv 内置 `video-pan / video-zoom` + 立体声裁切 | 鼠标拖拽看视角 |
 | 编译 | CMake ≥ 3.21 | 现代化，跨平台 |
 
-## 一、安装依赖（Windows）
-
-### 1. Visual Studio 2022 (Community 即可)
-
-勾选 **"使用 C++ 的桌面开发"** 工作负载。CMake 也会一并装上。
-
-### 2. Qt 6 (≥ 6.5，推荐 6.7+)
-
-从 https://www.qt.io/download-qt-installer 下载在线安装器。
-
-勾选：`Qt 6.7.x` → `MSVC 2022 64-bit`
-
-安装后假设路径为 `C:\Qt\6.7.0\msvc2022_64`。
-
-### 3. libmpv
-
-最简单 — **直接下载预编译 SDK** ：
-
-1. 去 https://sourceforge.net/projects/mpv-player-windows/files/libmpv/ 下载最新 `mpv-dev-x86_64-*.7z`
-2. 解压后你会得到：
-   ```
-   mpv-dev/
-   ├── include/mpv/   (头文件)
-   ├── libmpv-2.dll   (运行时)
-   └── libmpv.dll.a   (导入库, 重命名为 libmpv-2.lib 给 MSVC 用)
-   ```
-3. MSVC 需要 .lib，不能直接用 mingw 的 .dll.a，**生成 .lib**：
-
-   在 `x64 Native Tools Command Prompt for VS 2022` 里：
-   ```cmd
-   cd path\to\mpv-dev
-   dumpbin /exports libmpv-2.dll > exports.txt
-   ```
-   用一个文本编辑器把 `exports.txt` 中函数名整理成 `libmpv-2.def`：
-   ```
-   EXPORTS
-       mpv_create
-       mpv_initialize
-       ... (所有 mpv_* 函数)
-   ```
-   然后：
-   ```cmd
-   lib /def:libmpv-2.def /name:libmpv-2.dll /out:libmpv-2.lib /machine:x64
-   ```
-
-4. 把整理好的目录布置到 `third_party/mpv/`：
-   ```
-   AuroraPlayer/third_party/mpv/
-   ├── include/mpv/*.h
-   ├── lib/libmpv-2.lib
-   └── lib/libmpv-2.dll
-   ```
-
-> **或者**：用 vcpkg：`vcpkg install mpv:x64-windows`，然后给 CMake 传 `-DCMAKE_TOOLCHAIN_FILE=...vcpkg.cmake`。
-
----
-
-## 二、编译
-
-```powershell
-cd D:\Projects\AuroraPlayer
-cmake -B build -S . -G "Visual Studio 17 2022" -A x64 ^
-      -DCMAKE_PREFIX_PATH="C:/Qt/6.7.0/msvc2022_64"
-cmake --build build --config Release -j
-```
-
-产物：`build/bin/Release/AuroraPlayer.exe`，运行时所需的所有 DLL 已经由 `windeployqt` 自动 copy 到同目录。
-
----
-
-## 三、键位
+## 一、键位
 
 | 键 | 功能 |
 |---|---|
@@ -107,7 +37,7 @@ cmake --build build --config Release -j
 
 ---
 
-## 四、项目结构
+## 二、项目结构
 
 ```
 AuroraPlayer/
@@ -131,7 +61,7 @@ AuroraPlayer/
 
 ---
 
-## 五、关键设计点
+## 三、关键设计点
 
 ### 1. 渲染：零拷贝 GPU 路径
 
@@ -155,7 +85,7 @@ mpv 直接在 GPU 上完成解码、滤镜、scaler、tonemap 后把像素写进
 
 ---
 
-## 六、Roadmap
+## 四、Roadmap
 
 - [ ] mpv user shader：完整 equirect-to-perspective（替代 pan/zoom 近似）
 - [ ] 缩略图栏（PotPlayer 风格的滚动 timeline 预览）
