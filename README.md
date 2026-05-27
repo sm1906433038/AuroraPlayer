@@ -17,22 +17,6 @@
 | VR / 360 | mpv 内置 `video-pan / video-zoom` + 立体声裁切 | 鼠标拖拽看视角 |
 | 编译 | CMake ≥ 3.21 | 现代化，跨平台 |
 
-## ⚠️ 路径警告
-
-**当前所在目录包含中文字符**：
-```
-d:\办公软件，学习类\PyCharm\PyCharm project\AuroraPlayer
-```
-这会让 CMake / Qt moc / windeployqt **几乎确定**翻车。在编译前请**先把整个 `AuroraPlayer/` 文件夹复制到纯英文路径**：
-
-```powershell
-robocopy "d:\办公软件，学习类\PyCharm\PyCharm project\AuroraPlayer" "D:\Projects\AuroraPlayer" /E
-```
-
-之后在 `D:\Projects\AuroraPlayer` 下进行所有编译操作。
-
----
-
 ## 一、安装依赖（Windows）
 
 ### 1. Visual Studio 2022 (Community 即可)
